@@ -1,6 +1,7 @@
 /*
  * By: shushhhhhh
- * Description: Simple ATM styled banking system to check balance, deposit money and withdraw money. 
+ * Description: Simple ATM styled banking system to check balance, deposit money and withdraw money.
+ * ** Now saves the balance after withdrawing and depositing when using the new transaction method. **
  */
 
 package banksystem;
