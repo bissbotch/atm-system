@@ -1,14 +1,15 @@
 package banksystem;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Dashboard {
     public Scanner scan = new Scanner(System.in);
     public double balance = 0;
 	public int choice;
-	public double bal[];
+	public double bal[] = new double[]{0};
 
     //Pound sign
-	public static String pound = "\u00a3";
+	public String pound = "\u00a3";
 
     public static void main(String[] args) {
 
@@ -24,7 +25,6 @@ public class Dashboard {
 
 		account.checksForAccount();
         
-        
         if (correctLogin = true) {
             transaction.transaction(correctLogin, username);
         }
@@ -33,7 +33,8 @@ public class Dashboard {
     // Main transaction method
     public void transaction(boolean correctLogin, String username) {
         System.out.println("--------- Welcome ---------");
-	
+        DecimalFormat df = new DecimalFormat("#.##");
+        
         //ATM menu. Choose type of transaction here.
         System.out.println("Please select a choice: \n");
 
@@ -46,7 +47,8 @@ public class Dashboard {
         //Check balance
         switch(choice) {
         case 1:
-            System.out.println("Your balance is " + bal[0] + "\n");
+            double newAmount = bal[0];
+            System.out.println("Your balance is £" + df.format(newAmount) + "\n");
             anotherTransaction(correctLogin);
         }
 
@@ -67,7 +69,7 @@ public class Dashboard {
             else {
                 double newAmount = balance - amount;
                 bal[0] = newAmount;
-                System.out.println("You now have " + pound + newAmount + " in your account \n");
+                System.out.println("You now have £" + df.format(newAmount) + " in your account \n");
 
                 anotherTransaction(correctLogin);
             }
@@ -81,7 +83,7 @@ public class Dashboard {
 
             double newAmount = balance + amount;
             bal[0] = newAmount;
-            System.out.println("Your new balance is " + pound + newAmount + "\n");
+            System.out.println("Your new balance is £" + df.format(newAmount) + "\n");
 
             anotherTransaction(correctLogin);
 
@@ -89,22 +91,33 @@ public class Dashboard {
         }
     }
 
-//Method to ask user if they want to go to the menu and select a new option.
-public void anotherTransaction(boolean correctLogin) {
-    System.out.println("Would you like to do another transaction?\n 1 = Yes\n 2 = No \n");
-    int anotherTransaction = scan.nextInt();
-    
-    if (anotherTransaction == 1) {
-        transaction(true);
+    //Method to ask user if they want to go to the menu and select a new option.
+    public void anotherTransaction(boolean correctLogin) {
+        Account account = new Account();
+        account.getCorrectLogin();
+        account.getUsername();
+
+        String username = account.getUsername();
+
+        System.out.println("Would you like to do another transaction? (Y/N) \n");
+        String anotherTransaction = scan.next();
+        
+        if (anotherTransaction .equalsIgnoreCase("Y")) {
+            transaction(correctLogin, username);
+        }
+        
+        else if (anotherTransaction .equalsIgnoreCase("N")) {
+            System.out.println("Goodbye :)");
+            close();
+        }
+        
+        else {
+            System.out.println("Invalid choice \n");
+            anotherTransaction(correctLogin);
+        }
     }
-    
-    else if (anotherTransaction == 2) {
-        System.out.println("Goodbye :)");
+
+    public void close() {
+        scan.close();
     }
-    
-    else {
-        System.out.println("Invalid choice \n");
-        anotherTransaction(correctLogin);
-    }
-	}
 }

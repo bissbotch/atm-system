@@ -40,7 +40,6 @@ public class Account {
 
 		setUsername(username);
 
-
 		//Asks for password
 		System.out.println("Please enter a password: \n");
 		password = scan.next();
@@ -51,7 +50,7 @@ public class Account {
 	//Login
     public void login() {
 
-		System.out.println("--- Welcome back --- \n")
+		System.out.println("--- Welcome back --- \n");
 
 		getUsername();
 		getPassword();
